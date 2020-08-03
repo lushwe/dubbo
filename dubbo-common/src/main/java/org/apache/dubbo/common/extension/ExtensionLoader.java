@@ -421,8 +421,6 @@ public class ExtensionLoader<T> {
             return getDefaultExtension();
         }
         final Holder<Object> holder = getOrCreateHolder(name);
-
-        // 这里使用双重检查锁单例模式，instance需要volatitle修饰（查看属性Holder#value, 果不其然）
         Object instance = holder.get();
         if (instance == null) {
             synchronized (holder) {
