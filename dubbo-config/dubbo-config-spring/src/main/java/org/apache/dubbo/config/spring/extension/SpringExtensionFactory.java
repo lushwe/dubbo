@@ -60,11 +60,13 @@ public class SpringExtensionFactory implements ExtensionFactory {
     @SuppressWarnings("unchecked")
     public <T> T getExtension(Class<T> type, String name) {
 
+        // 如果接口标有SPI注解，则只能从dubbo 的SPI扩展容器中获取
         //SPI should be get from SpiExtensionFactory
         if (type.isInterface() && type.isAnnotationPresent(SPI.class)) {
             return null;
         }
 
+        // 遍历spring上下文，获取bean实例
         for (ApplicationContext context : CONTEXTS) {
             T bean = BeanFactoryUtils.getOptionalBean(context, name, type);
             if (bean != null) {

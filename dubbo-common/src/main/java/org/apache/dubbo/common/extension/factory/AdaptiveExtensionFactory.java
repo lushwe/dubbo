@@ -43,6 +43,8 @@ public class AdaptiveExtensionFactory implements ExtensionFactory {
 
     @Override
     public <T> T getExtension(Class<T> type, String name) {
+        // 从ExtensionFactory的扩展实现来看，这里factories有两个，分别为SpiExtensionFactory和SpringExtensionFactory
+        // 一个是dubbo 的SPI扩展工厂，一个是Spring扩展工厂，一个从dubbo的IOC扩展容器中获取实例，一个从spring容器中获取ben实例
         for (ExtensionFactory factory : factories) {
             T extension = factory.getExtension(type, name);
             if (extension != null) {

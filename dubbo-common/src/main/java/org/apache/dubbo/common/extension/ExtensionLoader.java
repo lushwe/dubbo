@@ -652,7 +652,8 @@ public class ExtensionLoader<T> {
     public T getAdaptiveExtension() {
         Object instance = cachedAdaptiveInstance.get();
         if (instance == null) {
-            // 如果之前创建自适应扩展出现了错误，这里直接抛出异常了，不需要再次尝试了（但是有没有可能之前创建失败，现在就可以创建成功呢，这里需要深究下，待后面搞明白了再来补充这里为啥这么做）
+            // 如果之前创建自适应扩展出现了错误，这里直接抛出异常了，不需要再次尝试了
+            // todo 但是有没有可能之前创建失败，现在就可以创建成功呢？这里需要深究下，待后面搞明白了再来补充这里为啥这么做
             if (createAdaptiveInstanceError != null) {
                 throw new IllegalStateException("Failed to create adaptive instance: " +
                         createAdaptiveInstanceError.toString(),

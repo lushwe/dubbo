@@ -27,9 +27,13 @@ public class SpiExtensionFactory implements ExtensionFactory {
 
     @Override
     public <T> T getExtension(Class<T> type, String name) {
+        // 指定类型type不是接口，或没有SPI注解，返回null
         if (type.isInterface() && type.isAnnotationPresent(SPI.class)) {
+            // 获取指定类型的ExtensionLoader
             ExtensionLoader<T> loader = ExtensionLoader.getExtensionLoader(type);
             if (!loader.getSupportedExtensions().isEmpty()) {
+                // 支持的扩展不为空，则获取自适应扩展
+                // todo 这里为什么是获取自适应扩展而不是指定name对应的扩展或默认扩展呢，需要深入思考下？
                 return loader.getAdaptiveExtension();
             }
         }
